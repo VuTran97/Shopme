@@ -59,6 +59,7 @@ public class UserRepositoryTest {
 
   @Test
   public void testUpdateUser(){
+    //test
     UserEntity user = userRepository.findById(1).get();
     user.setEnabled(true);
     user.setEmail("vuth2397@gmail.com");
