@@ -37,6 +37,12 @@ public class UserServiceImpl implements UserService {
     userRepository.save(user);
   }
 
+  @Override
+  public boolean isEmailUnique(String email) {
+    UserEntity userByEmail = userRepository.getUserByEmail(email);
+    return userByEmail == null;
+  }
+
 
   private void encodePassword(UserEntity user){
     String encodePassword = passwordEncoder.encode(user.getPassword());
