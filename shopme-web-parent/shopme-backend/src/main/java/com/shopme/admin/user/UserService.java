@@ -12,5 +12,7 @@ public interface UserService {
 
    void save(UserEntity user);
 
-   boolean isEmailUnique(String email);
+   boolean isEmailUnique(String email, Integer id);
+
+   UserEntity getUser(Integer id) throws UserNotFoundException;
 }
