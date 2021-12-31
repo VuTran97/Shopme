@@ -36,25 +36,38 @@ public class UserController {
   }
 
   @PostMapping("/users/save")
-  public String saveUser(UserEntity user, RedirectAttributes redirectAttributes){
+  public String saveUser(UserEntity user, RedirectAttributes redirectAttributes) {
     userService.save(user);
     redirectAttributes.addFlashAttribute("message", "The user has been saved successfully.");
     return "redirect:/users";
   }
 
   @GetMapping("/users/edit/{id}")
-  public String updateUser(@PathVariable("id") Integer id, Model model, RedirectAttributes redirectAttributes){
-    try{
+  public String updateUser(@PathVariable("id") Integer id, Model model,
+      RedirectAttributes redirectAttributes) {
+    try {
       UserEntity userEntity = userService.getUser(id);
       List<RoleEntity> roles = userService.findAllRoles();
       model.addAttribute("user", userEntity);
       model.addAttribute("roles", roles);
-      model.addAttribute("pageTitle", "Edit User (ID: " +id+ ")");
+      model.addAttribute("pageTitle", "Edit User (ID: " + id + ")");
       return "user_form";
-    }catch(UserNotFoundException e){
+    } catch (UserNotFoundException e) {
       redirectAttributes.addFlashAttribute("message", e.getMessage());
       return "redirect:/users";
     }
+  }
 
+  @GetMapping("/users/delete/{id}")
+  public String delete(@PathVariable("id") Integer id,
+      RedirectAttributes redirectAttributes) {
+    try {
+      userService.delete(id);
+      redirectAttributes
+          .addFlashAttribute("message", "The user with ID " + id + " deleted successfully");
+    } catch (UserNotFoundException e) {
+      redirectAttributes.addFlashAttribute("message", e.getMessage());
+    }
+    return "redirect:/users";
   }
 }

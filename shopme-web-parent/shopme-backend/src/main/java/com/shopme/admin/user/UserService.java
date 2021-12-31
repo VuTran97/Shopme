@@ -15,4 +15,6 @@ public interface UserService {
    boolean isEmailUnique(String email, Integer id);
 
    UserEntity getUser(Integer id) throws UserNotFoundException;
+
+   void delete(Integer id) throws UserNotFoundException;
 }

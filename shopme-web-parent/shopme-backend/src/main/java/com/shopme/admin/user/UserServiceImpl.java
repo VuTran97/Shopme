@@ -79,6 +79,15 @@ public class UserServiceImpl implements UserService {
     }
   }
 
+  @Override
+  public void delete(Integer id) throws UserNotFoundException {
+    Long count = userRepository.countById(id);
+    if(count == null || count == 0){
+      throw new UserNotFoundException("Could not find any user with ID "+id);
+    }
+    userRepository.deleteById(id);
+  }
+
 
   private void encodePassword(UserEntity user){
     String encodePassword = passwordEncoder.encode(user.getPassword());
